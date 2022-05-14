@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/Cart.dart';
+import 'package:saharago_b2b/models/Cart.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';

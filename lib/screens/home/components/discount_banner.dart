@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saharago_b2b/constants.dart';
 
 import '../../../size_config.dart';
 
@@ -15,21 +16,28 @@ class DiscountBanner extends StatelessWidget {
       margin: EdgeInsets.all(getProportionateScreenWidth(20)),
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(20),
-        vertical: getProportionateScreenWidth(15),
+        vertical: getProportionateScreenWidth(30),
       ),
       decoration: BoxDecoration(
-        color: Color(0xFF4A3298),
-        borderRadius: BorderRadius.circular(20),
+        color: kPrimaryColor,
+        borderRadius: BorderRadius.circular(13),
       ),
       child: Text.rich(
         TextSpan(
           style: TextStyle(color: Colors.white),
           children: [
-            TextSpan(text: "A Summer Surpise\n"),
             TextSpan(
-              text: "Cashback 20%",
+                text: "Today’s offer\n",
+                style: TextStyle(fontSize: getProportionateScreenWidth(16))),
+            TextSpan(
+                text: "5% discount\n",
+                style: TextStyle(
+                    fontSize: getProportionateScreenWidth(16),
+                    fontWeight: FontWeight.bold)),
+            TextSpan(
+              text: "on all orders%",
               style: TextStyle(
-                fontSize: getProportionateScreenWidth(24),
+                fontSize: getProportionateScreenWidth(16),
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/components/socal_card.dart';
-import 'package:shop_app/constants.dart';
-import 'package:shop_app/size_config.dart';
+import 'package:saharago_b2b/components/socal_card.dart';
+import 'package:saharago_b2b/constants.dart';
+import 'package:saharago_b2b/size_config.dart';
 
 import 'sign_up_form.dart';
 

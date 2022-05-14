@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/components/rounded_icon_btn.dart';
-import 'package:shop_app/models/Product.dart';
+import 'package:saharago_b2b/components/rounded_icon_btn.dart';
+import 'package:saharago_b2b/models/Product.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
