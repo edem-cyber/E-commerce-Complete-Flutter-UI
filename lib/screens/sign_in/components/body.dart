@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:saharago_b2b/components/no_account_text.dart';
 import 'package:saharago_b2b/components/socal_card.dart';
 import '../../../size_config.dart';
@@ -17,14 +18,19 @@ class Body extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
-                Text(
-                  "Welcome Back",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: getProportionateScreenWidth(28),
-                    fontWeight: FontWeight.bold,
-                  ),
+                // Text(
+                //   "Welcome Back",
+                //   style: TextStyle(
+                //     color: Colors.black,
+                //     fontSize: getProportionateScreenWidth(28),
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
+                SvgPicture.asset(
+                  "assets/icons/greenlogo.svg",
+                  width: SizeConfig.screenWidth * 0.6,
                 ),
+                SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
                   "Sign in with your email and password  \nor continue with social media",
                   textAlign: TextAlign.center,
@@ -35,15 +41,15 @@ class Body extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/google-icon.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/facebook-2.svg",
                       press: () {},
                     ),
-                    SocalCard(
+                    SocialCard(
                       icon: "assets/icons/twitter.svg",
                       press: () {},
                     ),
