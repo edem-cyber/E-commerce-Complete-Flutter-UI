@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:saharago_b2b/components/custom_surfix_icon.dart';
 import 'package:saharago_b2b/components/form_error.dart';
 import 'package:saharago_b2b/helper/keyboard.dart';
+import 'package:saharago_b2b/models/SignInModel.dart';
+import 'package:saharago_b2b/providers/AuthProvider.dart';
 import 'package:saharago_b2b/screens/forgot_password/forgot_password_screen.dart';
 import 'package:saharago_b2b/screens/login_success/login_success_screen.dart';
 
@@ -16,9 +21,12 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
+  // String? email;
+  // String? password;
+  SignInBody? signInBody;
   bool? remember = false;
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2050);
+
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -37,6 +45,93 @@ class _SignFormState extends State<SignForm> {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context, listen: false);
+
+    var doSignIn = () {
+      print('on doSignIn');
+
+      final form = _formKey.currentState;
+
+      try {
+        if (form!.validate()) {
+          form.save();
+
+          auth.loggedInStatus = Status.Authenticating;
+          auth.login(signInBody!);
+
+          Future.delayed(loginTime).then((_) {
+            Navigator.pushReplacementNamed(
+                context, LoginSuccessScreen.routeName);
+            auth.loggedInStatus = Status.LoggedIn;
+          });
+
+          /*// now check confirm password
+        if(_password.endsWith(_confirmPassword)){
+          auth.register(_username, _password).then((response) {
+            if(response['status']){
+              User user = response['data'];
+              Provider.of<UserProvider>(context,listen: false).setUser(user);
+              Navigator.pushReplacementNamed(context, '/login');
+            }else{
+              Flushbar(
+                title: 'Registration fail',
+                message: response.toString(),
+                duration: Duration(seconds: 10),
+              ).show(context);
+            }
+          });
+        }else{
+          Flushbar(
+            title: 'Mismatch password',
+            message: 'Please enter valid confirm password',
+            duration: Duration(seconds: 10),
+          ).show(context);
+        }*/
+
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+      // if (form!.validate()) {
+      //   form.save();
+
+      //   auth.loggedInStatus = Status.Authenticating;
+      //   auth.notify();
+
+      //   Future.delayed(loginTime).then((_) {
+      //     Navigator.pushReplacementNamed(context, '/login');
+      //     auth.loggedInStatus = Status.LoggedIn;
+      //     auth.notify();
+      //   });
+
+      //   /*// now check confirm password
+      //   if(_password.endsWith(_confirmPassword)){
+      //     auth.register(_username, _password).then((response) {
+      //       if(response['status']){
+      //         User user = response['data'];
+      //         Provider.of<UserProvider>(context,listen: false).setUser(user);
+      //         Navigator.pushReplacementNamed(context, '/login');
+      //       }else{
+      //         Flushbar(
+      //           title: 'Registration fail',
+      //           message: response.toString(),
+      //           duration: Duration(seconds: 10),
+      //         ).show(context);
+      //       }
+      //     });
+      //   }else{
+      //     Flushbar(
+      //       title: 'Mismatch password',
+      //       message: 'Please enter valid confirm password',
+      //       duration: Duration(seconds: 10),
+      //     ).show(context);
+      //   }*/
+
+      // } else {
+      //   debugPrint('on doRegister else');
+      // }
+    };
+
     return Form(
       key: _formKey,
       child: Column(
@@ -73,11 +168,16 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+              try {
+                doSignIn();
+                // _formKey.currentState!.validate() ? doSignIn() : null;
+                // Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                //    if (_formKey.currentState!.validate()) {
+                //   Navigator.pushNamed(context, OtpScreen.routeName);
+                // }
+              } catch (e) {
+                // Get snack bar
+                debugPrint(e.toString());
               }
             },
           ),
@@ -89,7 +189,7 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => signInBody!.password = newValue.toString(),
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
@@ -109,7 +209,19 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Password",
+        contentPadding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(10),
+          horizontal: getProportionateScreenWidth(25),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        labelText: "Email",
         hintText: "Enter your password",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
@@ -122,7 +234,7 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => signInBody!.email = newValue.toString().trim(),
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
@@ -142,6 +254,18 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(10),
+          horizontal: getProportionateScreenWidth(25),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
         labelText: "Email",
         hintText: "Enter your email",
         // If  you are using latest version of flutter then lable text and hint text shown like this

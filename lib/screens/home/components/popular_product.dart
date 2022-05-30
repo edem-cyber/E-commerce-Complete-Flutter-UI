@@ -24,7 +24,8 @@ class PopularProducts extends StatelessWidget {
                 demoProducts.length,
                 (index) {
                   if (demoProducts[index].isPopular)
-                    return ProductCard(product: demoProducts[index]);
+                    return ProductCard(product: demoProducts[index],
+                    width: MediaQuery.of(context).size.width * 0.4,);
 
                   return SizedBox
                       .shrink(); // here by default width and height is 0

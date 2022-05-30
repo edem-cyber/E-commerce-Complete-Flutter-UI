@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../size_config.dart';
 
 class SplashContent extends StatelessWidget {
@@ -23,29 +24,31 @@ class SplashContent extends StatelessWidget {
         //     fontWeight: FontWeight.bold,
         //   ),
         // ),
-        Spacer(flex: 2),
-        Image.asset(
-          image!,
-          height: getProportionateScreenHeight(265),
-          width: getProportionateScreenWidth(235),
-        ),
-        Spacer(flex: 2),
-        Image.asset(
-          heading!,
-          height: getProportionateScreenHeight(30),
-          width: getProportionateScreenWidth(235),
-        ),
+
         Spacer(flex: 2),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             text!,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+                fontWeight: FontWeight.w200,
+                fontSize: getProportionateScreenWidth(15),
+                color: Colors.white),
             textAlign: TextAlign.center,
           ),
         ),
+        // Image.asset(
+        //   image!,
+        //   height: getProportionateScreenHeight(265),
+        //   width: getProportionateScreenWidth(235),
+        // ),
+        Spacer(flex: 2),
+        SvgPicture.asset(
+          heading!,
+          height: getProportionateScreenHeight(40),
+          width: getProportionateScreenWidth(235),
+        ),
+        Spacer(flex: 2),
       ],
     );
   }

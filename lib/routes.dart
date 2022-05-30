@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:saharago_b2b/base.dart';
 import 'package:saharago_b2b/screens/cart/cart_screen.dart';
 import 'package:saharago_b2b/screens/complete_profile/complete_profile_screen.dart';
 import 'package:saharago_b2b/screens/details/details_screen.dart';
@@ -16,6 +17,7 @@ import 'screens/sign_up/sign_up_screen.dart';
 // All our routes will be available here
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
+  Base.routeName: (context) => Base(),
   SignInScreen.routeName: (context) => SignInScreen(),
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),

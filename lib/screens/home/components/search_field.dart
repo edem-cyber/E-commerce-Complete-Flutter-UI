@@ -11,22 +11,38 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: SizeConfig.screenWidth * 0.6,
+      padding: EdgeInsets.symmetric(
+        horizontal: getProportionateScreenWidth(20),
+        vertical: getProportionateScreenHeight(10),
+      ),
+      // width: SizeConfig.screenWidth * 0.6,
       decoration: BoxDecoration(
-        color: kSecondaryColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(15),
+        color: Color(0xF5EBEBEB),
+        // color: kSecondaryColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: TextField(
         onChanged: (value) => print(value),
         decoration: InputDecoration(
+            // fillColor: Colors.black12,
+            // filled: true,
             contentPadding: EdgeInsets.symmetric(
                 horizontal: getProportionateScreenWidth(20),
                 vertical: getProportionateScreenWidth(9)),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
-            hintText: "Search product",
-            prefixIcon: Icon(Icons.search)),
+            errorBorder: InputBorder.none,
+            hintText: "Search",
+            hintStyle: TextStyle(
+              fontSize: getProportionateScreenWidth(20),
+              color: kPrimaryColor,
+            ),
+            prefixIcon: Icon(
+              Icons.search,
+              size: getProportionateScreenWidth(35),
+              color: kPrimaryColor,
+            )),
       ),
     );
   }

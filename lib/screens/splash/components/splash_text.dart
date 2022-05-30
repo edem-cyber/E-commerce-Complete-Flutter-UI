@@ -10,7 +10,7 @@ class SplashText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text!,
         style: TextStyle(
-          color: kPrimaryColor,
+          color: Colors.white,
         ));
   }
 }

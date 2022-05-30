@@ -38,7 +38,7 @@ List<Product> demoProducts = [
       Color(0xFFDECB9C),
       Colors.white,
     ],
-    title: "Wireless Controller for PS4™",
+    title: "Chair made of ash wood sourced from responsible",
     price: 64.99,
     description: description,
     rating: 4.8,
@@ -47,6 +47,60 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 2,
+    images: [
+      "assets/images/chair.png",
+    ],
+    colors: [
+      Color(0xFFF6625E),
+      Color(0xFF836DB8),
+      Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Gloves XC Omega - Polygon",
+    price: 3.55,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 3,
+    images: [
+      "assets/images/table1.png",
+    ],
+    colors: [
+      Color(0xFFF6625E),
+      Color(0xFF836DB8),
+      Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Wooden bedside table featuring a raised design",
+    price: 6.55,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 4,
+    images: [
+      "assets/images/table2.png",
+    ],
+    colors: [
+      Color(0xFFF6625E),
+      Color(0xFF836DB8),
+      Color(0xFFDECB9C),
+      Colors.white,
+    ],
+    title: "Gloves XC Omega - Polygon",
+    price: 36.55,
+    description: description,
+    rating: 4.1,
+    isFavourite: true,
+    isPopular: true,
+  ),
+  Product(
+    id: 5,
     images: [
       "assets/images/Image Popular Product 2.png",
     ],
@@ -63,7 +117,7 @@ List<Product> demoProducts = [
     isPopular: true,
   ),
   Product(
-    id: 3,
+    id: 6,
     images: [
       "assets/images/glap.png",
     ],
@@ -73,7 +127,7 @@ List<Product> demoProducts = [
       Color(0xFFDECB9C),
       Colors.white,
     ],
-    title: "Gloves XC Omega - Polygon",
+    title: "Wooden bedside table featuring a raised design",
     price: 36.55,
     description: description,
     rating: 4.1,
@@ -81,7 +135,7 @@ List<Product> demoProducts = [
     isPopular: true,
   ),
   Product(
-    id: 4,
+    id: 7,
     images: [
       "assets/images/wireless headset.png",
     ],

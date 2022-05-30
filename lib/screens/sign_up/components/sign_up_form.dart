@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:saharago_b2b/components/custom_surfix_icon.dart';
 import 'package:saharago_b2b/components/default_button.dart';
 import 'package:saharago_b2b/components/form_error.dart';
+import 'package:saharago_b2b/providers/AuthProvider.dart';
 import 'package:saharago_b2b/screens/complete_profile/complete_profile_screen.dart';
 
 import '../../../constants.dart';
@@ -13,11 +17,13 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   String? email;
   String? password;
   String? conform_password;
   bool remember = false;
+  final _formKey = GlobalKey<FormState>();
+  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -34,10 +40,108 @@ class _SignUpFormState extends State<SignUpForm> {
       });
   }
 
+  var loading = Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      CircularProgressIndicator(),
+      Text(" Registering ... Please wait")
+    ],
+  );
+
+  @override
+  void initState() {
+    late GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider auth = Provider.of<AuthProvider>(context);
+    var doRegister = () {
+      print('on doRegister');
+
+      final form = _formKey.currentState;
+
+      try {
+        if (form!.validate()) {
+          form.save();
+
+          auth.loggedInStatus = Status.Authenticating;
+
+          Future.delayed(loginTime).then((_) {
+            Navigator.pushReplacementNamed(context, '/login');
+            auth.loggedInStatus = Status.LoggedIn;
+          });
+
+          /*// now check confirm password
+        if(_password.endsWith(_confirmPassword)){
+          auth.register(_username, _password).then((response) {
+            if(response['status']){
+              User user = response['data'];
+              Provider.of<UserProvider>(context,listen: false).setUser(user);
+              Navigator.pushReplacementNamed(context, '/login');
+            }else{
+              Flushbar(
+                title: 'Registration fail',
+                message: response.toString(),
+                duration: Duration(seconds: 10),
+              ).show(context);
+            }
+          });
+        }else{
+          Flushbar(
+            title: 'Mismatch password',
+            message: 'Please enter valid confirm password',
+            duration: Duration(seconds: 10),
+          ).show(context);
+        }*/
+
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+      // if (form!.validate()) {
+      //   form.save();
+
+      //   auth.loggedInStatus = Status.Authenticating;
+      //   auth.notify();
+
+      //   Future.delayed(loginTime).then((_) {
+      //     Navigator.pushReplacementNamed(context, '/login');
+      //     auth.loggedInStatus = Status.LoggedIn;
+      //     auth.notify();
+      //   });
+
+      //   /*// now check confirm password
+      //   if(_password.endsWith(_confirmPassword)){
+      //     auth.register(_username, _password).then((response) {
+      //       if(response['status']){
+      //         User user = response['data'];
+      //         Provider.of<UserProvider>(context,listen: false).setUser(user);
+      //         Navigator.pushReplacementNamed(context, '/login');
+      //       }else{
+      //         Flushbar(
+      //           title: 'Registration fail',
+      //           message: response.toString(),
+      //           duration: Duration(seconds: 10),
+      //         ).show(context);
+      //       }
+      //     });
+      //   }else{
+      //     Flushbar(
+      //       title: 'Mismatch password',
+      //       message: 'Please enter valid confirm password',
+      //       duration: Duration(seconds: 10),
+      //     ).show(context);
+      //   }*/
+
+      // } else {
+      //   debugPrint('on doRegister else');
+      // }
+    };
+
     return Form(
-      key: _formKey,
+      key: formKey,
       child: Column(
         children: [
           buildEmailFormField(),
@@ -50,11 +154,9 @@ class _SignUpFormState extends State<SignUpForm> {
           DefaultButton(
             text: "Continue",
             press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              }
+              // doRegister();
+              // if all are valid then go to success screen
+              Navigator.pushNamed(context, CompleteProfileScreen.routeName);
             },
           ),
         ],

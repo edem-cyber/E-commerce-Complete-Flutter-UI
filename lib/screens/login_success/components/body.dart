@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saharago_b2b/base.dart';
 import 'package:saharago_b2b/components/default_button.dart';
 import 'package:saharago_b2b/constants.dart';
 import 'package:saharago_b2b/screens/home/home_screen.dart';
@@ -12,7 +13,10 @@ class Body extends StatelessWidget {
         Spacer(),
         Text(
           "Welcome to Saharago",
-          style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, fontSize: getProportionateScreenWidth(25)),
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontWeight: FontWeight.bold,
+              fontSize: getProportionateScreenWidth(25)),
         ),
         Image.asset(
           "assets/images/success.png",
@@ -27,13 +31,15 @@ class Body extends StatelessWidget {
         //     color: Colors.black,
         //   ),
         // ),
-        Spacer(),
+        SizedBox(
+          height: getProportionateScreenHeight(50),
+        ),
         SizedBox(
           width: SizeConfig.screenWidth * 0.6,
           child: DefaultButton(
             text: "Go to home",
             press: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
+              Navigator.pushNamed(context, Base.routeName);
             },
           ),
         ),

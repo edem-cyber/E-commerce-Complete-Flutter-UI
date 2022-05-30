@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:saharago_b2b/providers/AuthProvider.dart';
+import 'package:saharago_b2b/providers/UserProvider.dart';
 import 'package:saharago_b2b/routes.dart';
 import 'package:saharago_b2b/screens/profile/profile_screen.dart';
 import 'package:saharago_b2b/screens/splash/splash_screen.dart';
@@ -9,7 +12,7 @@ void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(MyApp());
-    FlutterNativeSplash.remove();
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatefulWidget {
@@ -34,14 +37,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: theme(),
-      // home: SplashScreen(),
-      // We use routeName so that we dont need to remember the name
-      initialRoute: SplashScreen.routeName,
-      routes: routes,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: SplashScreen(),
+        routes: routes,
+      ),
     );
   }
 }

@@ -17,7 +17,8 @@ class Body extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: SizeConfig.screenHeight * 0.04),
+                SizedBox(height: SizeConfig.screenHeight * 0.1),
+                // Spacer(),
                 // Text(
                 //   "Welcome Back",
                 //   style: TextStyle(
@@ -57,6 +58,7 @@ class Body extends StatelessWidget {
                 ),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 NoAccountText(),
+                // Spacer()
               ],
             ),
           ),
